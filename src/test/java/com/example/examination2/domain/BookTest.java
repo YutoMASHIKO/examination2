@@ -82,4 +82,21 @@ class BookTest {
                     .hasMessage("出版社は100文字以下でなくてはいけません。");
         }
     }
+
+    @Nested
+    class 値段に関するガード条件 {
+        @Test
+        void 値段がnullの場合() {
+            assertThatThrownBy(() -> new Book("1", "テスト駆動開発", "Kent Beck", "オーム社", null))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("値段がnullです。");
+        }
+
+        @Test
+        void 値段が負の値の場合() {
+            assertThatThrownBy(() -> new Book("1", "テスト駆動開発", "Kent Beck", "オーム社", -100))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("値段は正の値でなくてはいけません。");
+        }
+    }
 }
