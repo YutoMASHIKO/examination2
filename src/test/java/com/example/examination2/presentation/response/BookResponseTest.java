@@ -12,7 +12,7 @@ class BookResponseTest {
 
         BookResponse expected = new BookResponse("123", "テスト駆動開発", "Kent Beck", "オーム社", 3080);
 
-        BookResponse actual = BookResponse.createResponce(book);
+        BookResponse actual = BookResponse.createResponse(book);
 
         assertEquals(expected, actual);
     }
