@@ -6,7 +6,7 @@ public record Book(String id, String title, String author, String publisher, Int
 
     public Book {
         if (isNull(id)) {
-            throw new IllegalArgumentException("本IDがnullです。");
+            throw new IllegalArgumentException("IDがnullです。");
         }
     }
 }
