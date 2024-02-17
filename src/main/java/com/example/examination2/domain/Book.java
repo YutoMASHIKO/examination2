@@ -12,7 +12,6 @@ public record Book(String id, String title, String author, String publisher, Int
         if (!isNumeric(id)) {
             throw new IllegalArgumentException("IDが数字ではありません。");
         }
-
         if (Long.parseLong(id) <= 0L || Long.parseLong(id) > 9999999999L) {
             throw new IllegalArgumentException("IDは1~9999999999でなくてはいけません。");
         }

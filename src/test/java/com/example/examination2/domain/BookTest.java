@@ -1,9 +1,11 @@
 package com.example.examination2.domain;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class BookTest {
 
@@ -19,5 +21,12 @@ class BookTest {
         assertThatThrownBy(() -> new Book(id, "テスト駆動開発", "Kent Beck", "オーム社", 3080))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(message);
+    }
+
+    @Test
+    void 問題なくBookが作れる場合() {
+        assertDoesNotThrow(() -> {
+            new Book("123", "テスト駆動開発", "Kent Beck", "オーム社", 3080);
+        });
     }
 }
