@@ -1,5 +1,6 @@
 package com.example.examination2.domain;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -8,6 +9,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class BookTest {
+    private static final String TOO_LONG_STRING = "abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdef";
+
+    @Test
+    void 問題なくBookが作れる場合() {
+        assertDoesNotThrow(() -> {
+            new Book("123", "テスト駆動開発", "Kent Beck", "オーム社", 3080);
+        });
+    }
 
     @ParameterizedTest(name = "{2} の場合")
     @CsvSource(delimiter = '|', textBlock = """
@@ -23,10 +32,20 @@ class BookTest {
                 .hasMessage(message);
     }
 
-    @Test
-    void 問題なくBookが作れる場合() {
-        assertDoesNotThrow(() -> {
-            new Book("123", "テスト駆動開発", "Kent Beck", "オーム社", 3080);
-        });
+    @Nested
+    class タイトルに関するガード条件 {
+        @Test
+        void タイトルがnullの場合() {
+            assertThatThrownBy(() -> new Book("1", null, "Kent Beck", "オーム社", 3080))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("タイトルがnullです。");
+        }
+
+        @Test
+        void タイトルが100文字以上の場合() {
+            assertThatThrownBy(() -> new Book("1", TOO_LONG_STRING, "Kent Beck", "オーム社", 3080))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("タイトルは100文字以下でなくてはいけません。");
+        }
     }
 }
