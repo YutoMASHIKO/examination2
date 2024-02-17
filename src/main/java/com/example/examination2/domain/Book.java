@@ -22,5 +22,12 @@ public record Book(String id, String title, String author, String publisher, Int
         if (title.length() > 100) {
             throw new IllegalArgumentException("タイトルは100文字以下でなくてはいけません。");
         }
+
+        if (isNull(author)) {
+            throw new IllegalArgumentException("著者がnullです。");
+        }
+        if (author.length() > 100) {
+            throw new IllegalArgumentException("著者は100文字以下でなくてはいけません。");
+        }
     }
 }
