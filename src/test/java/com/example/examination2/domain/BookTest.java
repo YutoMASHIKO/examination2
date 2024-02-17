@@ -65,4 +65,21 @@ class BookTest {
                     .hasMessage("著者は100文字以下でなくてはいけません。");
         }
     }
+
+    @Nested
+    class 出版社に関するガード条件 {
+        @Test
+        void 出版社がnullの場合() {
+            assertThatThrownBy(() -> new Book("1", "テスト駆動開発", "Kent Beck", null, 3080))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("出版社がnullです。");
+        }
+
+        @Test
+        void 出版社が100文字以上の場合() {
+            assertThatThrownBy(() -> new Book("1", "テスト駆動開発", "Kent Beck", TOO_LONG_STRING, 3080))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("出版社は100文字以下でなくてはいけません。");
+        }
+    }
 }
