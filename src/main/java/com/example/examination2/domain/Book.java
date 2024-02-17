@@ -36,5 +36,12 @@ public record Book(String id, String title, String author, String publisher, Int
         if (publisher.length() > 100) {
             throw new IllegalArgumentException("出版社は100文字以下でなくてはいけません。");
         }
+
+        if (isNull(price)) {
+            throw new IllegalArgumentException("値段がnullです。");
+        }
+        if (price < 0) {
+            throw new IllegalArgumentException("値段は正の値でなくてはいけません。");
+        }
     }
 }
