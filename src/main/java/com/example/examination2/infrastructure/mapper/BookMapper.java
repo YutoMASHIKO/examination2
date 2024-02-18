@@ -1,6 +1,6 @@
 package com.example.examination2.infrastructure.mapper;
 
-import com.example.examination2.domain.Book;
+import com.example.examination2.infrastructure.entity.BookEntity;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -9,5 +9,5 @@ import org.apache.ibatis.annotations.Select;
 public interface BookMapper {
 
     @Select("SELECT id, title, author, publisher, price FROM books")
-    List<Book> getAllBooks();
+    List<BookEntity> getAllBooks();
 }
