@@ -38,7 +38,7 @@ class BookMapperTest {
                 new Book("4", "Clean Agile", "Robert C. Martin", "ドワンゴ", 2640)
         );
 
-        List<Book> actual = sut.getAll();
+        List<Book> actual = sut.getAllBooks();
 
         assertEquals(expected, actual);
     }
