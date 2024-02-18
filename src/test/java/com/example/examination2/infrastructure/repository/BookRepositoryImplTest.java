@@ -3,6 +3,7 @@ package com.example.examination2.infrastructure.repository;
 import com.example.examination2.domain.Book;
 import com.example.examination2.infrastructure.entity.BookEntity;
 import com.example.examination2.infrastructure.mapper.BookMapper;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,6 +45,17 @@ class BookRepositoryImplTest {
                 new Book("3", "エクストリームプログラミング", "Kent Beck", "オーム社", 2420),
                 new Book("4", "Clean Agile", "Robert C. Martin", "ドワンゴ", 2640)
         );
+
+        List<Book> actual = sut.getAllBooks();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void データが存在しないときに全件取得をする場合() {
+        when(bookMapper.getAllBooks()).thenReturn(new ArrayList<>());
+
+        List<Book> expected = new ArrayList<>();
 
         List<Book> actual = sut.getAllBooks();
 
