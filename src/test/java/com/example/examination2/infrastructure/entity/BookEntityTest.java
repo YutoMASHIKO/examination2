@@ -1,4 +1,4 @@
-package com.example.examination2.presentation.entity;
+package com.example.examination2.infrastructure.entity;
 
 import com.example.examination2.domain.Book;
 import org.junit.jupiter.api.Test;
