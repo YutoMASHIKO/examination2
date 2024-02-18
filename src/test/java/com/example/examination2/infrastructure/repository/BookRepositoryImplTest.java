@@ -45,7 +45,7 @@ class BookRepositoryImplTest {
                 new Book("4", "Clean Agile", "Robert C. Martin", "ドワンゴ", 2640)
         );
 
-        List<BookEntity> actual = sut.getAllBooks();
+        List<Book> actual = sut.getAllBooks();
 
         assertEquals(expected, actual);
     }
