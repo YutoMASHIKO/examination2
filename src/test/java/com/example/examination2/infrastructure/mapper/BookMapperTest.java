@@ -7,6 +7,7 @@ import com.github.database.rider.core.api.connection.ConnectionHolder;
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.junit5.api.DBRider;
 import java.sql.DriverManager;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,16 @@ class BookMapperTest {
                 new BookEntity("3", "エクストリームプログラミング", "Kent Beck", "オーム社", 2420),
                 new BookEntity("4", "Clean Agile", "Robert C. Martin", "ドワンゴ", 2640)
         );
+
+        List<BookEntity> actual = sut.getAllBooks();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DataSet(value = "datasets/empty-books.yml")
+    void 全権取得時にデータが存在しない場合() {
+        List<BookEntity> expected = new ArrayList<>();
 
         List<BookEntity> actual = sut.getAllBooks();
 
