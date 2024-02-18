@@ -8,6 +8,9 @@ spring:
     hikari:
       minimum-idle: 2
       maximum-pool-size: 5
+  jackson:
+    serialization:
+      indent-output: true
   flyway:
     enabled: true
 
