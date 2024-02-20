@@ -9,6 +9,7 @@ import com.github.database.rider.junit5.api.DBRider;
 import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,28 +31,45 @@ class BookMapperTest {
     @Autowired
     BookMapper sut;
 
-    @Test
-    @DataSet(value = "datasets/all-books.yml")
-    void 全件取得をする場合() {
-        List<BookEntity> expected = List.of(
-                new BookEntity("1", "テスト駆動開発", "Kent Beck", "オーム社", 3080),
-                new BookEntity("2", "アジャイルサムライ", "Jonathan Rasmusson", "オーム社", 2860),
-                new BookEntity("3", "エクストリームプログラミング", "Kent Beck", "オーム社", 2420),
-                new BookEntity("4", "Clean Agile", "Robert C. Martin", "ドワンゴ", 2640)
-        );
+    @Nested
+    class 全件取得 {
+        @Test
+        @DataSet(value = "datasets/all-books.yml")
+        void 全件取得をする場合() {
+            List<BookEntity> expected = List.of(
+                    new BookEntity("1", "テスト駆動開発", "Kent Beck", "オーム社", 3080),
+                    new BookEntity("2", "アジャイルサムライ", "Jonathan Rasmusson", "オーム社", 2860),
+                    new BookEntity("3", "エクストリームプログラミング", "Kent Beck", "オーム社", 2420),
+                    new BookEntity("4", "Clean Agile", "Robert C. Martin", "ドワンゴ", 2640)
+            );
 
-        List<BookEntity> actual = sut.getAllBooks();
+            List<BookEntity> actual = sut.getAllBooks();
 
-        assertEquals(expected, actual);
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        @DataSet(value = "datasets/empty-books.yml")
+        void データが存在しない場合() {
+            List<BookEntity> expected = new ArrayList<>();
+
+            List<BookEntity> actual = sut.getAllBooks();
+
+            assertEquals(expected, actual);
+        }
     }
 
-    @Test
-    @DataSet(value = "datasets/empty-books.yml")
-    void 全権取得時にデータが存在しない場合() {
-        List<BookEntity> expected = new ArrayList<>();
+    @Nested
+    class ID検索 {
+        @Test
+        @DataSet(value = "datasets/all-books.yml")
+        void IDが1の本を検索する場合() {
+            BookEntity expected =  new BookEntity("1", "テスト駆動開発", "Kent Beck", "オーム社", 3080);
 
-        List<BookEntity> actual = sut.getAllBooks();
+            BookEntity actual = sut.getBookById("1");
 
-        assertEquals(expected, actual);
+            assertEquals(expected, actual);
+        }
     }
+
 }
