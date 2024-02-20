@@ -3,6 +3,7 @@ package com.example.examination2.application;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
+import com.example.examination2.application.exception.BookNotFoundException;
 import com.example.examination2.domain.Book;
 import com.example.examination2.domain.repository.BookRepository;
 import java.util.Optional;

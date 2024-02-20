@@ -1,5 +1,6 @@
 package com.example.examination2.application;
 
+import com.example.examination2.application.exception.BookNotFoundException;
 import com.example.examination2.domain.Book;
 import com.example.examination2.domain.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,6 @@ public class GetBookUseCase {
 
     public Book getBookById(String id) {
         return bookRepository.getBookById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new BookNotFoundException(id));
     }
 }
