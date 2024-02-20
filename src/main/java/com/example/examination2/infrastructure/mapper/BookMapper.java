@@ -10,4 +10,7 @@ public interface BookMapper {
 
     @Select("SELECT id, title, author, publisher, price FROM books")
     List<BookEntity> getAllBooks();
+
+    @Select("SELECT id, title, author, publisher, price FROM books WHERE id = #{id}")
+    BookEntity getBookById(String id);
 }
