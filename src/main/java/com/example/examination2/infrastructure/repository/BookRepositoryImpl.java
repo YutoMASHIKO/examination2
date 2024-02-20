@@ -1,10 +1,13 @@
 package com.example.examination2.infrastructure.repository;
 
+import static java.util.Objects.isNull;
+
 import com.example.examination2.domain.Book;
 import com.example.examination2.domain.repository.BookRepository;
 import com.example.examination2.infrastructure.entity.BookEntity;
 import com.example.examination2.infrastructure.mapper.BookMapper;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -19,7 +22,10 @@ public class BookRepositoryImpl implements BookRepository {
     }
 
     @Override
-    public Book getBookById(String id) {
-        return bookMapper.getBookById(id).convert();
+    public Optional<Book> getBookById(String id) {
+        if (isNull(bookMapper.getBookById(id))) {
+            return Optional.empty();
+        }
+        return Optional.of(bookMapper.getBookById(id).convert());
     }
 }

@@ -75,9 +75,9 @@ class BookRepositoryImplTest {
             when(bookMapper.getBookById("1"))
                     .thenReturn(new BookEntity("1", "テスト駆動開発", "Kent Beck", "オーム社", 3080));
 
-            Book expected = new Book("1", "テスト駆動開発", "Kent Beck", "オーム社", 3080);
+            Optional<Book> expected = Optional.of(new Book("1", "テスト駆動開発", "Kent Beck", "オーム社", 3080));
 
-            Book actual = sut.getBookById("1");
+            Optional<Book> actual = sut.getBookById("1");
 
             assertEquals(expected, actual);
         }
