@@ -72,7 +72,7 @@ class BookRepositoryImplTest {
     class ID検索 {
         @Test
         void IDによる検索を行う場合() {
-            when(bookMapper.getBookById("1"))
+            when(bookMapper.getBookById(1))
                     .thenReturn(new BookEntity("1", "テスト駆動開発", "Kent Beck", "オーム社", 3080));
 
             Optional<Book> expected = Optional.of(new Book("1", "テスト駆動開発", "Kent Beck", "オーム社", 3080));
@@ -84,7 +84,7 @@ class BookRepositoryImplTest {
 
         @Test
         void 存在しないIDで検索を行う場合() {
-            when(bookMapper.getBookById("99")).thenReturn(null);
+            when(bookMapper.getBookById(99)).thenReturn(null);
 
             Optional<Book> expected = Optional.empty();
 

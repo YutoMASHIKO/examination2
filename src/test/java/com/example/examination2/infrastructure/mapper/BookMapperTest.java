@@ -66,7 +66,7 @@ class BookMapperTest {
         void IDが1の本を検索する場合() {
             BookEntity expected =  new BookEntity("1", "テスト駆動開発", "Kent Beck", "オーム社", 3080);
 
-            BookEntity actual = sut.getBookById("1");
+            BookEntity actual = sut.getBookById(1);
 
             assertEquals(expected, actual);
         }
@@ -74,7 +74,7 @@ class BookMapperTest {
         @Test
         @DataSet(value = "datasets/all-books.yml")
         void 存在しないIDを検索した場合() {
-            BookEntity actual = sut.getBookById("99");
+            BookEntity actual = sut.getBookById(99);
 
             assertNull(actual);
         }

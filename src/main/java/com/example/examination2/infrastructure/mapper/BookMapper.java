@@ -12,5 +12,5 @@ public interface BookMapper {
     List<BookEntity> getAllBooks();
 
     @Select("SELECT id, title, author, publisher, price FROM books WHERE id = #{id}")
-    BookEntity getBookById(String id);
+    BookEntity getBookById(Integer id);
 }

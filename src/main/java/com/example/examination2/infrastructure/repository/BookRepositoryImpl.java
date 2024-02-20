@@ -23,9 +23,9 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     public Optional<Book> getBookById(String id) {
-        if (isNull(bookMapper.getBookById(id))) {
+        if (isNull(bookMapper.getBookById(Integer.parseInt(id)))) {
             return Optional.empty();
         }
-        return Optional.of(bookMapper.getBookById(id).convert());
+        return Optional.of(bookMapper.getBookById(Integer.parseInt(id)).convert());
     }
 }
