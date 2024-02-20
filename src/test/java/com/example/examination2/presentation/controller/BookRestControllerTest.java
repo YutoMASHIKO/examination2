@@ -76,4 +76,21 @@ class BookRestControllerTest {
                 .body("books[3].publisher", equalTo("ドワンゴ"))
                 .body("books[3].price", equalTo(2640));
     }
+
+    @Test
+    void IDが1の本を取得できる場合() {
+        when(getBookUseCase.getBookById("1"))
+                .thenReturn(new Book("1", "テスト駆動開発", "Kent Beck", "オーム社", 3080));
+
+        given()
+                .when()
+                .get("/v1/books/1")
+                .then()
+                .status(HttpStatus.OK)
+                .body("id", equalTo("1"))
+                .body("title", equalTo("テスト駆動開発"))
+                .body("author", equalTo("Kent Beck"))
+                .body("publisher", equalTo("オーム社"))
+                .body("price", equalTo(3080));
+    }
 }
