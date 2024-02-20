@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.when;
 
 import com.example.examination2.application.GetAllBooksUseCase;
+import com.example.examination2.application.GetBookUseCase;
 import com.example.examination2.domain.Book;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import java.util.List;
@@ -23,6 +24,9 @@ class BookRestControllerTest {
 
     @MockBean
     GetAllBooksUseCase getAllBooksUseCase;
+
+    @MockBean
+    GetBookUseCase getBookUseCase;
 
     @BeforeEach
     void setup() {
