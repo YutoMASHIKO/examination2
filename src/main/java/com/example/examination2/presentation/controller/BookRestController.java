@@ -7,6 +7,7 @@ import com.example.examination2.presentation.response.BookResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,9 +31,9 @@ public class BookRestController {
         return AllBooksResponse.createAllResponse(getAllBooksUseCase.getAllBooks());
     }
 
-    @GetMapping("v1/books/1")
+    @GetMapping("v1/books/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public BookResponse getBookById() {
-        return BookResponse.createResponse(getBookUseCase.getBookById("1"));
+    public BookResponse getBookById(@PathVariable String id) {
+        return BookResponse.createResponse(getBookUseCase.getBookById(id));
     }
 }
