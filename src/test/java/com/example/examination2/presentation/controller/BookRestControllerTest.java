@@ -97,4 +97,21 @@ class BookRestControllerTest {
                 .body("publisher", equalTo("オーム社"))
                 .body("price", equalTo(3080));
     }
+
+    @Test
+    void IDが2の本を取得できる場合() {
+        when(getBookUseCase.getBookById("2"))
+                .thenReturn(new Book("2", "アジャイルサムライ", "Jonathan Rasmusson", "オーム社", 2860));
+
+        given()
+                .when()
+                .get("/v1/books/2")
+                .then()
+                .status(HttpStatus.OK)
+                .body("id", equalTo("2"))
+                .body("title", equalTo("アジャイルサムライ"))
+                .body("author", equalTo("Jonathan Rasmusson"))
+                .body("publisher", equalTo("オーム社"))
+                .body("price", equalTo(2860));
+    }
 }
