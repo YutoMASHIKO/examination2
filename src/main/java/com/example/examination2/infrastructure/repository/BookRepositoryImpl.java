@@ -17,4 +17,9 @@ public class BookRepositoryImpl implements BookRepository {
     public List<Book> getAllBooks() {
         return bookMapper.getAllBooks().stream().map(BookEntity::convert).toList();
     }
+
+    @Override
+    public Book getBookById(String id) {
+        return bookMapper.getBookById(id).convert();
+    }
 }
