@@ -70,6 +70,14 @@ class BookMapperTest {
 
             assertEquals(expected, actual);
         }
+
+        @Test
+        @DataSet(value = "datasets/all-books.yml")
+        void 存在しないIDを検索した場合() {
+            BookEntity actual = sut.getBookById("99");
+
+            assertNull(actual);
+        }
     }
 
 }
