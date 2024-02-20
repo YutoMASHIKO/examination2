@@ -35,4 +35,11 @@ class GetBookUseCaseTest {
 
         assertEquals(expected, actual);
     }
+
+    @Test
+    void IDによる個別の本が取得できない場合() {
+        when(bookRepository.getBookById("99")).thenReturn(Optional.empty());
+
+        assertThrows(BookNotFoundException.class, () -> sut.getBookById("99"));
+    }
 }
