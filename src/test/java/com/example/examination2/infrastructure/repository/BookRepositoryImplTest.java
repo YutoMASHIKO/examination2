@@ -101,4 +101,16 @@ class BookRepositoryImplTest {
 
         assertEquals(5L, actual);
     }
+
+    @Test
+    void 本の新規登録をする場合() {
+        when(bookMapper.insert(new BookEntity(4, "Clean Agile", "Robert C. Martin", "ドワンゴ", 2640)))
+                .thenReturn(1);
+
+        Book expected = new Book("4", "Clean Agile", "Robert C. Martin", "ドワンゴ", 2640);
+
+        Book actual = sut.insertBook(new Book("4", "Clean Agile", "Robert C. Martin", "ドワンゴ", 2640));
+
+        assertEquals(expected, actual);
+    }
 }
