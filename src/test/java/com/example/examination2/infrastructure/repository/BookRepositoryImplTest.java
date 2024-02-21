@@ -2,6 +2,7 @@ package com.example.examination2.infrastructure.repository;
 
 import com.example.examination2.domain.Book;
 import com.example.examination2.infrastructure.entity.BookEntity;
+import com.example.examination2.infrastructure.exception.SqlExecutionException;
 import com.example.examination2.infrastructure.mapper.BookMapper;
 import java.util.ArrayList;
 import java.util.List;
