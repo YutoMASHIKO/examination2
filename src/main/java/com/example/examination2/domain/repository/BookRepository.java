@@ -11,4 +11,6 @@ public interface BookRepository {
     Optional<Book> getBookById(String id);
 
     Long getNextId();
+
+    Book insertBook(Book book);
 }

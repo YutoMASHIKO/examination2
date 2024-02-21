@@ -33,4 +33,13 @@ public class BookRepositoryImpl implements BookRepository {
     public Long getNextId() {
         return bookMapper.getNextId();
     }
+
+    @Override
+    public Book insertBook(Book book) {
+       bookMapper.insert(
+               new BookEntity(Integer.parseInt(book.id()), book.title(), book.author(), book.publisher(), book.price())
+        );
+
+        return book;
+    }
 }
