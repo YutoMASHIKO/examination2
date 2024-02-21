@@ -28,4 +28,9 @@ public class BookRepositoryImpl implements BookRepository {
         }
         return Optional.of(bookMapper.getBookById(Integer.parseInt(id)).convert());
     }
+
+    @Override
+    public Long getNextId() {
+        return bookMapper.getNextId();
+    }
 }
