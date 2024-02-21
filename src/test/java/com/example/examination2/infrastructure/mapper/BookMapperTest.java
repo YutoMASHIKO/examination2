@@ -4,6 +4,7 @@ import com.example.examination2.infrastructure.entity.BookEntity;
 import com.github.database.rider.core.api.configuration.DBUnit;
 import com.github.database.rider.core.api.connection.ConnectionHolder;
 import com.github.database.rider.core.api.dataset.DataSet;
+import com.github.database.rider.core.api.dataset.ExpectedDataSet;
 import com.github.database.rider.junit5.api.DBRider;
 import java.sql.DriverManager;
 import java.util.ArrayList;
@@ -96,6 +97,15 @@ class BookMapperTest {
 
             assertEquals(5L, actual);
         }
+    }
+
+    @Test
+    @DataSet(value = "datasets/before-insert-books.yml")
+    @ExpectedDataSet(value = "datasets/all-books.yml")
+    void 本の新規登録をする場合() {
+        Integer actual = sut.insert(new BookEntity(4, "Clean Agile", "Robert C. Martin", "ドワンゴ", 2640));
+
+        assertEquals(1, actual);
     }
 
 }
