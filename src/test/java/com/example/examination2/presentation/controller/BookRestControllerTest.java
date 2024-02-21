@@ -1,11 +1,13 @@
 package com.example.examination2.presentation.controller;
 
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
+import static java.util.Collections.emptyList;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.when;
 
 import com.example.examination2.application.GetAllBooksUseCase;
 import com.example.examination2.application.GetBookUseCase;
+import com.example.examination2.application.exception.BookNotFoundException;
 import com.example.examination2.domain.Book;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import java.util.List;
@@ -116,6 +118,21 @@ class BookRestControllerTest {
                     .body("author", equalTo("Jonathan Rasmusson"))
                     .body("publisher", equalTo("オーム社"))
                     .body("price", equalTo(2860));
+        }
+
+        @Test
+        void 存在しないIDで本の検索を行う場合() {
+            when(getBookUseCase.getBookById("99"))
+                    .thenThrow(new BookNotFoundException("99"));
+
+            given()
+                    .when()
+                    .get("/v1/books/99")
+                    .then()
+                    .statusCode(400)
+                    .body("code", equalTo("0003"))
+                    .body("message", equalTo("specified book [id = 99] is not found."))
+                    .body("details", equalTo(emptyList()));
         }
     }
 }
