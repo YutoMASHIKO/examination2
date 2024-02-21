@@ -8,7 +8,6 @@ import com.github.database.rider.junit5.api.DBRider;
 import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.List;
-import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,12 +79,23 @@ class BookMapperTest {
         }
     }
 
-    @Test
-    void 次の本IDを取得する場合() {
-        Flyway.configure().dataSource(DB_URL, DB_USER, DB_PASSWORD).load().migrate();
+    @Nested
+    class 次のIDの取得 {
+        @Test
+        @DataSet(executeScriptsBefore = "datasets/sql/next-id-1.sql")
+        void 次の本ID1を取得する場合() {
+            Long actual = sut.getNextId();
 
-        Long actual = sut.getNextId();
+            assertEquals(1L, actual);
+        }
 
-        assertEquals(5L, actual);
+        @Test
+        @DataSet(executeScriptsBefore = "datasets/sql/next-id-5.sql")
+        void 次の本ID5を取得する場合() {
+            Long actual = sut.getNextId();
+
+            assertEquals(5L, actual);
+        }
     }
+
 }
