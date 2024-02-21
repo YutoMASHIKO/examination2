@@ -92,4 +92,13 @@ class BookRepositoryImplTest {
             assertEquals(expected, actual);
         }
     }
+
+    @Test
+    void 次の本Idを取得する場合() {
+        when(bookMapper.getNextId()).thenReturn(5L);
+
+        Long actual = sut.getNextId();
+
+        assertEquals(5L, actual);
+    }
 }
