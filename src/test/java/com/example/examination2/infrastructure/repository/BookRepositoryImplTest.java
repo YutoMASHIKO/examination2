@@ -37,10 +37,10 @@ class BookRepositoryImplTest {
             when(bookMapper.getAllBooks())
                     .thenReturn(
                             List.of(
-                                    new BookEntity("1", "テスト駆動開発", "Kent Beck", "オーム社", 3080),
-                                    new BookEntity("2", "アジャイルサムライ", "Jonathan Rasmusson", "オーム社", 2860),
-                                    new BookEntity("3", "エクストリームプログラミング", "Kent Beck", "オーム社", 2420),
-                                    new BookEntity("4", "Clean Agile", "Robert C. Martin", "ドワンゴ", 2640)
+                                    new BookEntity(1, "テスト駆動開発", "Kent Beck", "オーム社", 3080),
+                                    new BookEntity(2, "アジャイルサムライ", "Jonathan Rasmusson", "オーム社", 2860),
+                                    new BookEntity(3, "エクストリームプログラミング", "Kent Beck", "オーム社", 2420),
+                                    new BookEntity(4, "Clean Agile", "Robert C. Martin", "ドワンゴ", 2640)
                             )
                     );
 
