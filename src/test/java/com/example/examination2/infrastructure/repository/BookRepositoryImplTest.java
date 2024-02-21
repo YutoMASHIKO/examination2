@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
 class BookRepositoryImplTest {
@@ -102,15 +103,31 @@ class BookRepositoryImplTest {
         assertEquals(5L, actual);
     }
 
-    @Test
-    void 本の新規登録をする場合() {
-        when(bookMapper.insert(new BookEntity(4, "Clean Agile", "Robert C. Martin", "ドワンゴ", 2640)))
-                .thenReturn(1);
+    @Nested
+    class 新規登録 {
+        @Test
+        void 本の新規登録に成功する場合() {
+            when(bookMapper.insert(new BookEntity(4, "Clean Agile", "Robert C. Martin", "ドワンゴ", 2640)))
+                    .thenReturn(1);
 
-        Book expected = new Book("4", "Clean Agile", "Robert C. Martin", "ドワンゴ", 2640);
+            Book expected = new Book("4", "Clean Agile", "Robert C. Martin", "ドワンゴ", 2640);
 
-        Book actual = sut.insertBook(new Book("4", "Clean Agile", "Robert C. Martin", "ドワンゴ", 2640));
+            Book actual = sut.insertBook(new Book("4", "Clean Agile", "Robert C. Martin", "ドワンゴ", 2640));
 
-        assertEquals(expected, actual);
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void 本の新規登録に失敗する場合() {
+            when(bookMapper.insert(new BookEntity(4, "Clean Agile", "Robert C. Martin", "ドワンゴ", 2640)))
+                    .thenReturn(0);
+
+            Book book = new Book("4", "Clean Agile", "Robert C. Martin", "ドワンゴ", 2640);
+
+            assertThatThrownBy(() -> sut.insertBook(book))
+                    .isInstanceOf(SqlExecutionException.class)
+                    .hasMessage("SQLの実行に失敗しました");
+        }
+
     }
 }
