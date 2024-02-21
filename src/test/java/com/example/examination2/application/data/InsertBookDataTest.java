@@ -5,10 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.example.examination2.domain.Book;
 import org.junit.jupiter.api.Test;
 
-class InsertBookTest {
+class InsertBookDataTest {
     @Test
     void Employeeオブジェクトに変換できる() {
-        InsertBook sut = new InsertBook("Clean Agile", "Robert C. Martin", "ドワンゴ", 2640);
+        InsertBookData sut = new InsertBookData("Clean Agile", "Robert C. Martin", "ドワンゴ", 2640);
 
         Book expected = new Book("4", "Clean Agile", "Robert C. Martin", "ドワンゴ", 2640);
 
