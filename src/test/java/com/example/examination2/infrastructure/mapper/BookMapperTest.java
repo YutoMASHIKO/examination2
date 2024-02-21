@@ -1,6 +1,5 @@
 package com.example.examination2.infrastructure.mapper;
 
-import com.example.examination2.domain.Book;
 import com.example.examination2.infrastructure.entity.BookEntity;
 import com.github.database.rider.core.api.configuration.DBUnit;
 import com.github.database.rider.core.api.connection.ConnectionHolder;
@@ -9,6 +8,7 @@ import com.github.database.rider.junit5.api.DBRider;
 import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.List;
+import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,4 +80,12 @@ class BookMapperTest {
         }
     }
 
+    @Test
+    void 次の本IDを取得する場合() {
+        Flyway.configure().dataSource(DB_URL, DB_USER, DB_PASSWORD).load().migrate();
+
+        Long actual = sut.getNextId();
+
+        assertEquals(5L, actual);
+    }
 }
