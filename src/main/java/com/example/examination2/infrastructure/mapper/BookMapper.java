@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface BookMapper {
@@ -22,4 +23,7 @@ public interface BookMapper {
 
     @Insert("INSERT INTO books (id, title, author, publisher, price) VALUES(#{id}, #{title}, #{author}, #{publisher}, #{price})")
     Integer insert(BookEntity bookEntity);
+
+    @Update("UPDATE books SET title = #{title}, author = #{author}, publisher = #{publisher}, price = #{price} WHERE id = #{id}")
+    Integer update(BookEntity bookEntity);
 }
