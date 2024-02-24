@@ -50,6 +50,13 @@ public class BookRepositoryImpl implements BookRepository {
         return book;
     }
 
+    @Override
+    public void updateBook(Book book) {
+        bookMapper.update(
+                new BookEntity(Integer.parseInt(book.id()), book.title(), book.author(), book.publisher(), book.price())
+        );
+    }
+
     private boolean isFailedSql(Integer number) {
         return number != 1;
     }
