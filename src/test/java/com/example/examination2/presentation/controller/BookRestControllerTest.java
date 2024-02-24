@@ -12,11 +12,17 @@ import com.example.examination2.application.InsertBookUseCase;
 import com.example.examination2.application.data.InsertBookData;
 import com.example.examination2.application.exception.BookNotFoundException;
 import com.example.examination2.domain.Book;
+import com.example.examination2.presentation.request.InsertBookRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -25,6 +31,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest
+@Slf4j
 class BookRestControllerTest {
     @Autowired
     MockMvc mockMvc;
@@ -168,18 +175,19 @@ class BookRestControllerTest {
                     .header("Location", equalTo("http://localhost/v1/books/4"));
         }
 
-        @Test
-        void 失敗する場合() {
+        @ParameterizedTest(name = "{4} の場合")
+        @CsvSource(delimiter = '|', textBlock = """
+           #       TITLE |    AUTHOR | PUBLISHER | PRICE | TESTNAME
+                     ' ' | Kent Beck |   オーム社 |  3080 | タイトルが空白
+             テスト駆動開発 |       ' ' |   オーム社 |  3080 | 著者が空白
+             テスト駆動開発 | Kent Beck |      ' ' |  3080 | 出版社が空白
+             テスト駆動開発 | Kent Beck |   オーム社 |       | 値段がnull
+             テスト駆動開発 | Kent Beck |   オーム社 | -3080 | 値段がマイナス
+           """)
+        void 失敗する場合(String title, String author, String publisher, Integer price, String testName) {
             given()
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
-                    .body("""
-                            {
-                            "title": " ",
-                            "author": "Robert C. Martin",
-                            "publisher": "ドワンゴ",
-                            "price": 2640
-                            }
-                            """)
+                    .body(marshalToJson(new InsertBookRequest(title, author, publisher, price)))
                     .when()
                     .post("/v1/books")
                     .then()
@@ -189,5 +197,16 @@ class BookRestControllerTest {
                     .body("details", hasSize(1));
         }
 
+    }
+
+    private static String marshalToJson(Object object) {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            log.info("JSONへの変換に失敗しました。", e);
+        }
+        return "";
     }
 }
