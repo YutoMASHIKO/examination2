@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 import com.example.examination2.application.GetAllBooksUseCase;
 import com.example.examination2.application.GetBookUseCase;
 import com.example.examination2.application.InsertBookUseCase;
+import com.example.examination2.application.UpdateBookUseCase;
 import com.example.examination2.application.data.InsertBookData;
 import com.example.examination2.application.exception.BookNotFoundException;
 import com.example.examination2.domain.Book;
@@ -44,6 +45,9 @@ class BookRestControllerTest {
 
     @MockBean
     InsertBookUseCase insertBookUseCase;
+
+    @MockBean
+    UpdateBookUseCase updateBookUseCase;
 
     @BeforeEach
     void setup() {
@@ -197,6 +201,18 @@ class BookRestControllerTest {
                     .body("details", hasSize(1));
         }
 
+    }
+
+    @Test
+    void 更新を行う場合() {
+        given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(new UpdateBookRequest("", "", "", 0))
+                .when()
+                .patch("/v1/books/1")
+                .then()
+                .status(HttpStatus.NO_CONTENT)
+                .body(equalTo(""));
     }
 
     private static String marshalToJson(Object object) {
