@@ -1,0 +1,21 @@
+books:
+  - id: 1
+    title: "テスト駆動開発"
+    author: "Uncle Bob"
+    publisher: "オーム社"
+    price: 3080
+  - id: 2
+    title: "アジャイルサムライ"
+    author: "Jonathan Rasmusson"
+    publisher: "オーム社"
+    price: 2860
+  - id: 3
+    title: "エクストリームプログラミング"
+    author: "Kent Beck"
+    publisher: "オーム社"
+    price: 2420
+  - id: 4
+    title: "Clean Agile"
+    author: "Robert C. Martin"
+    publisher: "ドワンゴ"
+    price: 2640

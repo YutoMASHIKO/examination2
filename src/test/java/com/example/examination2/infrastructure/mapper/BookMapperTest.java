@@ -108,4 +108,13 @@ class BookMapperTest {
         assertEquals(1, actual);
     }
 
+    @Test
+    @DataSet(value = "datasets/all-books.yml")
+    @ExpectedDataSet(value = "datasets/updated-all-books.yml")
+    void 本の更新を行う場合() {
+        Integer actual = sut.update(new BookEntity(1, "テスト駆動開発", "Uncle Bob", "オーム社", 3080));
+
+        assertEquals(1,actual);
+    }
+
 }
