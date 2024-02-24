@@ -157,4 +157,11 @@ class BookRepositoryImplTest {
                     .hasMessage("SQLの実行に失敗しました");
         }
     }
+
+    @Test
+    void 本の削除を行う場合() {
+        when(bookMapper.delete(1)).thenReturn(1);
+
+        assertDoesNotThrow(() -> sut.deleteBook("1"));
+    }
 }
