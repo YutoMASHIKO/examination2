@@ -27,6 +27,9 @@ class DeleteBookUseCaseTest {
 
     @Test
     void 削除を行う場合() {
+        when(bookRepository.getBookById("1"))
+                .thenReturn(Optional.of(new Book("1", "テスト駆動開発", "Kent Beck", "オーム社", 3080)));
+
         assertDoesNotThrow(() -> sut.deleteBook("1"));
     }
 
