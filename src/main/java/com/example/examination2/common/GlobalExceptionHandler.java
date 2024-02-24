@@ -8,6 +8,7 @@ import com.example.examination2.presentation.response.ErrorResponse;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.validation.FieldError;
@@ -72,6 +73,22 @@ public class GlobalExceptionHandler {
         return new ErrorResponse(
                 "0004",
                 e.getMessage(),
+                emptyList()
+        );
+    }
+
+    /**
+     * データベースへのアクセスが失敗した場合の例外処理を行います.
+     *
+     * @param e データベースへのアクセスが失敗した場合の例外
+     * @return データベースへのアクセスが失敗したことを示すエラーレスポンス
+     */
+    @ExceptionHandler(DataAccessException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleDatabaseAccessException(DataAccessException e) {
+        return new ErrorResponse(
+                "0001",
+                "Failed to access the database.",
                 emptyList()
         );
     }
