@@ -3,6 +3,7 @@ package com.example.examination2.presentation.controller;
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static java.util.Collections.emptyList;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
 
 import com.example.examination2.application.GetAllBooksUseCase;
@@ -142,25 +143,51 @@ class BookRestControllerTest {
         }
     }
 
-    @Test
-    void 本を新規登録する場合() {
-        when(insertBookUseCase.insertBook(new InsertBookData("Clean Agile", "Robert C. Martin", "ドワンゴ", 2640)))
-                .thenReturn(new Book("4", "Clean Agile", "Robert C. Martin", "ドワンゴ", 2640));
+    @Nested
+    class 本の新規登録 {
 
-        given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body("""
-                        {
-                        "title": "Clean Agile",
-                        "author": "Robert C. Martin",
-                        "publisher": "ドワンゴ",
-                        "price": 2640
-                        }
-                        """)
-                .when()
-                .post("/v1/books")
-                .then()
-                .statusCode(201)
-                .header("Location", equalTo("http://localhost/v1/books/4"));
+        @Test
+        void 成功する場合() {
+            when(insertBookUseCase.insertBook(new InsertBookData("Clean Agile", "Robert C. Martin", "ドワンゴ", 2640)))
+                    .thenReturn(new Book("4", "Clean Agile", "Robert C. Martin", "ドワンゴ", 2640));
+
+            given()
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .body("""
+                            {
+                            "title": "Clean Agile",
+                            "author": "Robert C. Martin",
+                            "publisher": "ドワンゴ",
+                            "price": 2640
+                            }
+                            """)
+                    .when()
+                    .post("/v1/books")
+                    .then()
+                    .statusCode(201)
+                    .header("Location", equalTo("http://localhost/v1/books/4"));
+        }
+
+        @Test
+        void 失敗する場合() {
+            given()
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .body("""
+                            {
+                            "title": " ",
+                            "author": "Robert C. Martin",
+                            "publisher": "ドワンゴ",
+                            "price": 2640
+                            }
+                            """)
+                    .when()
+                    .post("/v1/books")
+                    .then()
+                    .statusCode(400)
+                    .body("code", equalTo("0002"))
+                    .body("message", equalTo("request validation error is occurred."))
+                    .body("details", hasSize(1));
+        }
+
     }
 }
