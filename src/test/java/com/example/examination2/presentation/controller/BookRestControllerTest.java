@@ -14,6 +14,7 @@ import com.example.examination2.application.data.InsertBookData;
 import com.example.examination2.application.exception.BookNotFoundException;
 import com.example.examination2.domain.Book;
 import com.example.examination2.presentation.request.InsertBookRequest;
+import com.example.examination2.presentation.request.UpdateBookRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
@@ -207,7 +208,7 @@ class BookRestControllerTest {
     void 更新を行う場合() {
         given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(new UpdateBookRequest("", "", "", 0))
+                .body(new UpdateBookRequest(null, "Uncle Bob", null, null))
                 .when()
                 .patch("/v1/books/1")
                 .then()
