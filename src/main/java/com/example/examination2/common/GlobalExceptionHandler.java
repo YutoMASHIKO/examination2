@@ -73,4 +73,14 @@ public class GlobalExceptionHandler {
                 emptyList()
         );
     }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleOtherException(Exception e) {
+        return new ErrorResponse(
+                "9999",
+                String.format("An unexpected exception occurred: %s", e.getMessage()),
+                emptyList()
+        );
+    }
 }
