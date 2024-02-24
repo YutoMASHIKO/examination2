@@ -117,4 +117,12 @@ class BookMapperTest {
         assertEquals(1,actual);
     }
 
+    @Test
+    @DataSet(value = "datasets/all-books.yml")
+    @ExpectedDataSet(value = "datasets/deleted-books.yml")
+    void 本の削除を行う場合() {
+        Integer actual = sut.delete(2);
+
+        assertEquals(1, actual);
+    }
 }
