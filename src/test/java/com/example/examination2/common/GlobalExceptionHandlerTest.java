@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -32,7 +33,7 @@ class GlobalExceptionHandlerTest {
     @Autowired
     MockMvc mockMvc;
 
-    @MockBean
+    @SpyBean
     GetAllBooksUseCase getAllBooksUseCase;
 
     @MockBean
@@ -74,6 +75,20 @@ class GlobalExceptionHandlerTest {
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("code", equalTo("0004"))
                 .body("message", equalTo("SQLの実行に失敗しました"))
+                .body("details", equalTo(emptyList()));
+    }
+
+    @Test
+    void DataAccessExceptionが発生した場合() {
+        when(getAllBooksUseCase.getAllBooks()).thenThrow(new DataAccessException("") {});
+
+        given()
+                .when()
+                .get("/v1/books")
+                .then()
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("code", equalTo("0001"))
+                .body("message", equalTo("Failed to access the database."))
                 .body("details", equalTo(emptyList()));
     }
 
