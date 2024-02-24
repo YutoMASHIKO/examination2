@@ -2,6 +2,7 @@ package com.example.examination2.infrastructure.mapper;
 
 import com.example.examination2.infrastructure.entity.BookEntity;
 import java.util.List;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
@@ -26,4 +27,7 @@ public interface BookMapper {
 
     @Update("UPDATE books SET title = #{title}, author = #{author}, publisher = #{publisher}, price = #{price} WHERE id = #{id}")
     Integer update(BookEntity bookEntity);
+
+    @Delete("DELETE FROM books WHERE id = #{id}")
+    Integer delete(Integer id);
 }
