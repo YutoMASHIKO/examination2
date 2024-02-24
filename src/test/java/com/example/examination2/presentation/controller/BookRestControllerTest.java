@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
 
+import com.example.examination2.application.DeleteBookUseCase;
 import com.example.examination2.application.GetAllBooksUseCase;
 import com.example.examination2.application.GetBookUseCase;
 import com.example.examination2.application.InsertBookUseCase;
@@ -49,6 +50,9 @@ class BookRestControllerTest {
 
     @MockBean
     UpdateBookUseCase updateBookUseCase;
+
+    @MockBean
+    DeleteBookUseCase deleteBookUseCase;
 
     @BeforeEach
     void setup() {
@@ -211,6 +215,16 @@ class BookRestControllerTest {
                 .body(new UpdateBookRequest(null, "Uncle Bob", null, null))
                 .when()
                 .patch("/v1/books/1")
+                .then()
+                .status(HttpStatus.NO_CONTENT)
+                .body(equalTo(""));
+    }
+
+    @Test
+    void 削除を行う場合() {
+        given()
+                .when()
+                .delete("/v1/books/1")
                 .then()
                 .status(HttpStatus.NO_CONTENT)
                 .body(equalTo(""));
