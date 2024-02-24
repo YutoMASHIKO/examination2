@@ -61,6 +61,11 @@ public class BookRepositoryImpl implements BookRepository {
         }
     }
 
+    @Override
+    public void deleteBook(String id) {
+        bookMapper.delete(Integer.parseInt(id));
+    }
+
     private boolean isFailedSql(Integer number) {
         return number != 1;
     }

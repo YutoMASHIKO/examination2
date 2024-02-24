@@ -15,4 +15,6 @@ public interface BookRepository {
     Book insertBook(Book book);
 
     void updateBook(Book book);
+
+    void deleteBook(String id);
 }
