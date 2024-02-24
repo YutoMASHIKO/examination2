@@ -132,13 +132,29 @@ class BookRepositoryImplTest {
 
     }
 
-    @Test
-    void 本の更新を行う場合() {
-        when(bookMapper.update(new BookEntity(1, "テスト駆動開発", "Uncle Bob", "オーム社", 3080)))
-                .thenReturn(1);
+    @Nested
+    class 本の更新 {
 
-        Book book = new Book("1", "テスト駆動開発", "Uncle Bob", "オーム社", 3080);
+        @Test
+        void 成功する場合() {
+            when(bookMapper.update(new BookEntity(1, "テスト駆動開発", "Uncle Bob", "オーム社", 3080)))
+                    .thenReturn(1);
 
-        assertDoesNotThrow(() -> sut.updateBook(book));
+            Book book = new Book("1", "テスト駆動開発", "Uncle Bob", "オーム社", 3080);
+
+            assertDoesNotThrow(() -> sut.updateBook(book));
+        }
+
+        @Test
+        void 失敗する場合() {
+            when(bookMapper.update(new BookEntity(1, "テスト駆動開発", "Uncle Bob", "オーム社", 3080)))
+                    .thenReturn(0);
+
+            Book book = new Book("1", "テスト駆動開発", "Uncle Bob", "オーム社", 3080);
+
+            assertThatThrownBy(() -> sut.insertBook(book))
+                    .isInstanceOf(SqlExecutionException.class)
+                    .hasMessage("SQLの実行に失敗しました");
+        }
     }
 }
