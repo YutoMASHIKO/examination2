@@ -3,6 +3,7 @@ package com.example.examination2.common;
 import static java.util.Collections.emptyList;
 
 import com.example.examination2.application.exception.BookNotFoundException;
+import com.example.examination2.infrastructure.exception.SqlExecutionException;
 import com.example.examination2.presentation.response.ErrorResponse;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,22 @@ public class GlobalExceptionHandler {
                 "0002",
                 "request validation error is occurred.",
                 details
+        );
+    }
+
+    /**
+     * SQL実行時に問題があった場合の例外ハンドリングメソッドです.
+     *
+     * @param e SQL実行時に問題があった場合の例外
+     * @return エラーレスポンス
+     */
+    @ExceptionHandler(SqlExecutionException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleSqlExecution(SqlExecutionException e) {
+        return new ErrorResponse(
+                "0004",
+                e.getMessage(),
+                emptyList()
         );
     }
 }
