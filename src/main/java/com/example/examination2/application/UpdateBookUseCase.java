@@ -1,6 +1,7 @@
 package com.example.examination2.application;
 
 import com.example.examination2.application.data.UpdateBookData;
+import com.example.examination2.application.exception.BookNotFoundException;
 import com.example.examination2.domain.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,9 @@ public class UpdateBookUseCase {
         bookRepository.updateBook(
                 updateBookData.convert(
                         bookRepository.getBookById(updateBookData.id())
-                                .orElseThrow(RuntimeException::new))
-                );
+                                .orElseThrow(() -> new BookNotFoundException(updateBookData.id()))
+                )
+        );
     }
 
 }
