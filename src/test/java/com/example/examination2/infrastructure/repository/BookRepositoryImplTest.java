@@ -158,10 +158,22 @@ class BookRepositoryImplTest {
         }
     }
 
-    @Test
-    void 本の削除を行う場合() {
-        when(bookMapper.delete(1)).thenReturn(1);
+    @Nested
+    class 削除 {
+        @Test
+        void 正常に行える場合() {
+            when(bookMapper.delete(1)).thenReturn(1);
 
-        assertDoesNotThrow(() -> sut.deleteBook("1"));
+            assertDoesNotThrow(() -> sut.deleteBook("1"));
+        }
+
+        @Test
+        void 異常が発生する場合() {
+            when(bookMapper.delete(1)).thenReturn(0);
+
+            assertThatThrownBy(() -> sut.deleteBook("1"))
+                    .isInstanceOf(SqlExecutionException.class)
+                    .hasMessage("SQLの実行に失敗しました");
+        }
     }
 }
