@@ -1,5 +1,6 @@
 package com.example.examination2.presentation.controller;
 
+import com.example.examination2.application.DeleteBookUseCase;
 import com.example.examination2.application.GetAllBooksUseCase;
 import com.example.examination2.application.GetBookUseCase;
 import com.example.examination2.application.InsertBookUseCase;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +36,7 @@ public class BookRestController {
     private final GetBookUseCase getBookUseCase;
     private final InsertBookUseCase insertBookUseCase;
     private final UpdateBookUseCase updateBookUseCase;
+    private final DeleteBookUseCase deleteBookUseCase;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -75,5 +78,11 @@ public class BookRestController {
         updateBookUseCase.updateBook(
                 new UpdateBookData(id, request.title(), request.author(), request.publisher(), request.price())
         );
+    }
+
+    @DeleteMapping("v1/books/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteBook(@PathVariable("id") String id) {
+        deleteBookUseCase.deleteBook(id);
     }
 }

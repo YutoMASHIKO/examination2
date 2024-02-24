@@ -4,6 +4,7 @@ import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.when;
 
+import com.example.examination2.application.DeleteBookUseCase;
 import com.example.examination2.application.GetAllBooksUseCase;
 import com.example.examination2.application.GetBookUseCase;
 import com.example.examination2.application.InsertBookUseCase;
@@ -41,6 +42,9 @@ class GlobalExceptionHandlerTest {
 
     @SpyBean
     UpdateBookUseCase updateBookUseCase;
+
+    @MockBean
+    DeleteBookUseCase deleteBookUseCase;
 
     @SpyBean
     BookRepositoryImpl bookRepository;
