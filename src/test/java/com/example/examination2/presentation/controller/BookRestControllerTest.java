@@ -7,6 +7,8 @@ import static org.mockito.Mockito.when;
 
 import com.example.examination2.application.GetAllBooksUseCase;
 import com.example.examination2.application.GetBookUseCase;
+import com.example.examination2.application.InsertBookUseCase;
+import com.example.examination2.application.data.InsertBookData;
 import com.example.examination2.application.exception.BookNotFoundException;
 import com.example.examination2.domain.Book;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
@@ -18,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest
@@ -30,6 +33,9 @@ class BookRestControllerTest {
 
     @MockBean
     GetBookUseCase getBookUseCase;
+
+    @MockBean
+    InsertBookUseCase insertBookUseCase;
 
     @BeforeEach
     void setup() {
@@ -134,5 +140,27 @@ class BookRestControllerTest {
                     .body("message", equalTo("specified book [id = 99] is not found."))
                     .body("details", equalTo(emptyList()));
         }
+    }
+
+    @Test
+    void 本を新規登録する場合() {
+        when(insertBookUseCase.insertBook(new InsertBookData("Clean Agile", "Robert C. Martin", "ドワンゴ", 2640)))
+                .thenReturn(new Book("4", "Clean Agile", "Robert C. Martin", "ドワンゴ", 2640));
+
+        given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body("""
+                        {
+                        "title": "Clean Agile",
+                        "author": "Robert C. Martin",
+                        "publisher": "ドワンゴ",
+                        "price": 2640
+                        }
+                        """)
+                .when()
+                .post("/v1/books")
+                .then()
+                .statusCode(201)
+                .header("Location", equalTo("http://localhost/v1/books/4"));
     }
 }
