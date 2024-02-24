@@ -7,6 +7,7 @@ import com.example.examination2.infrastructure.exception.SqlExecutionException;
 import com.example.examination2.presentation.response.ErrorResponse;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.validation.FieldError;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 /**
  * グローバルな例外ハンドリングを行うクラスです.
  */
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -74,9 +76,16 @@ public class GlobalExceptionHandler {
         );
     }
 
+    /**
+     * アプリケーション内で発生する予期せぬ例外を処理します.
+     *
+     * @param e 発生した予期せぬ例外。
+     * @return 予期せぬ例外に関する詳細を含むエラーレスポンス
+     */
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleOtherException(Exception e) {
+        log.error("An unexpected exception occurred: {}", e.getMessage());
         return new ErrorResponse(
                 "9999",
                 String.format("An unexpected exception occurred: %s", e.getMessage()),
