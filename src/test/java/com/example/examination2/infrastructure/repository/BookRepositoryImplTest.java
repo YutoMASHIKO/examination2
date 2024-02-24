@@ -131,4 +131,14 @@ class BookRepositoryImplTest {
         }
 
     }
+
+    @Test
+    void 本の更新を行う場合() {
+        when(bookMapper.update(new BookEntity(1, "テスト駆動開発", "Uncle Bob", "オーム社", 3080)))
+                .thenReturn(1);
+
+        Book book = new Book("1", "テスト駆動開発", "Uncle Bob", "オーム社", 3080);
+
+        assertDoesNotThrow(() -> sut.updateBook(book));
+    }
 }
