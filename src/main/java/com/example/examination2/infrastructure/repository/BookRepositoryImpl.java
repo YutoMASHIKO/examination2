@@ -52,9 +52,13 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     public void updateBook(Book book) {
-        bookMapper.update(
+        Integer num = bookMapper.update(
                 new BookEntity(Integer.parseInt(book.id()), book.title(), book.author(), book.publisher(), book.price())
         );
+
+        if (isFailedSql(num)) {
+            handleSqlExecutionFailure();
+        }
     }
 
     private boolean isFailedSql(Integer number) {
