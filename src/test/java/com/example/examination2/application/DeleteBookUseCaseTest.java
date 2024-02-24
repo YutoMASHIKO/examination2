@@ -3,6 +3,7 @@ package com.example.examination2.application;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
+import com.example.examination2.application.exception.BookNotFoundException;
 import com.example.examination2.domain.Book;
 import com.example.examination2.domain.repository.BookRepository;
 import java.util.Optional;
@@ -27,6 +28,11 @@ class DeleteBookUseCaseTest {
     @Test
     void 削除を行う場合() {
         assertDoesNotThrow(() -> sut.deleteBook("1"));
+    }
+
+    @Test
+    void 存在しないIDを指定した場合() {
+        assertThrows(BookNotFoundException.class, () -> sut.deleteBook("0"));
     }
 
 }
