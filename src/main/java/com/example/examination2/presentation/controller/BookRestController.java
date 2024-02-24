@@ -2,15 +2,25 @@ package com.example.examination2.presentation.controller;
 
 import com.example.examination2.application.GetAllBooksUseCase;
 import com.example.examination2.application.GetBookUseCase;
+import com.example.examination2.application.InsertBookUseCase;
+import com.example.examination2.application.data.InsertBookData;
+import com.example.examination2.domain.Book;
+import com.example.examination2.presentation.request.InsertBookRequest;
 import com.example.examination2.presentation.response.AllBooksResponse;
 import com.example.examination2.presentation.response.BookResponse;
+import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/")
@@ -18,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookRestController {
     private final GetAllBooksUseCase getAllBooksUseCase;
     private final GetBookUseCase getBookUseCase;
+    private final InsertBookUseCase insertBookUseCase;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -35,5 +46,21 @@ public class BookRestController {
     @ResponseStatus(HttpStatus.OK)
     public BookResponse getBookById(@PathVariable String id) {
         return BookResponse.createResponse(getBookUseCase.getBookById(id));
+    }
+
+    @PostMapping("v1/books")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Void> insertBook(@RequestBody @Validated InsertBookRequest request) {
+        Book book = insertBookUseCase.insertBook(
+                new InsertBookData(request.title(), request.author(), request.publisher(), request.price())
+        );
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .pathSegment(book.id())
+                .build()
+                .encode()
+                .toUri();
+
+        return ResponseEntity.created(location).build();
     }
 }
