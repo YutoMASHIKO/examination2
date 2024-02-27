@@ -5,6 +5,7 @@ import com.example.examination2.application.exception.BookNotFoundException;
 import com.example.examination2.domain.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 本情報を更新するユースケースを表現するサービスクラスです.
@@ -21,6 +22,7 @@ public class UpdateBookUseCase {
    * @param updateBookData 更新対象の本情報
    * @throws BookNotFoundException 指定されたIDに対応する本が見つからない場合にスローされる例外
    */
+  @Transactional
   public void updateBook(UpdateBookData updateBookData) {
     bookRepository.updateBook(
         updateBookData.convert(

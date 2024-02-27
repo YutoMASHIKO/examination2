@@ -5,6 +5,7 @@ import com.example.examination2.domain.Book;
 import com.example.examination2.domain.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 本の新規登録をするユースケースを表現するサービスクラスです.
@@ -21,6 +22,7 @@ public class InsertBookUseCase {
    * @param insertBookData 新規登録する本データ
    * @return 作成された新規本情報
    */
+  @Transactional
   public Book insertBook(InsertBookData insertBookData) {
     return bookRepository.insertBook(insertBookData.convert(bookRepository.getNextId()));
   }
