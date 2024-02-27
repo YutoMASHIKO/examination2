@@ -24,7 +24,6 @@ spring:
       indent-output: true
   flyway:
     enabled: true
-    baseline-on-migrate: true
 
 mybatis:
   configuration:
