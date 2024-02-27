@@ -7,8 +7,8 @@ import com.example.examination2.domain.Book;
  *
  * @param title     本のタイトル
  * @param author    本の著者
- * @param publisher 出版社
- * @param price     価格
+ * @param publisher 本の出版社
+ * @param price     本の価格
  */
 public record InsertBookData(String title, String author, String publisher, Integer price) {
 

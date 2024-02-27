@@ -8,6 +8,9 @@ import lombok.Getter;
 @Getter
 public class BookNotFoundException extends RuntimeException {
 
+  /**
+   * 見つからなかった本のID.
+   */
   private final String id;
 
   /**

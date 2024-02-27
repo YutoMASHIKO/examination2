@@ -21,7 +21,7 @@ public record Book(String id, String title, String author, String publisher, Int
    * @param title     本のタイトル。100文字以下であり、nullであってはなりません。
    * @param author    本の著者。100文字以下であり、nullであってはなりません。
    * @param publisher 本の出版社。100文以下であり、nullであってはなりません。
-   * @param price     本の価格。nullであってはなりません。
+   * @param price     本の価格。正の値であり、nullであってはなりません。
    */
   public Book {
     validateId(id);

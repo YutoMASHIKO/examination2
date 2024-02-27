@@ -19,6 +19,7 @@ public class UpdateBookUseCase {
    * 本情報を更新します.
    *
    * @param updateBookData 更新対象の本情報
+   * @throws BookNotFoundException 指定されたIDに対応する本が見つからない場合にスローされる例外
    */
   public void updateBook(UpdateBookData updateBookData) {
     bookRepository.updateBook(

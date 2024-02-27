@@ -18,6 +18,7 @@ public class DeleteBookUseCase {
    * 指定された本IDに対応する本を削除します.
    *
    * @param id 削除対象の本ID
+   * @throws BookNotFoundException 指定されたIDに対応する本が見つからない場合にスローされる例外
    */
   public void deleteBook(String id) {
     if (bookRepository.getBookById(id).isEmpty()) {

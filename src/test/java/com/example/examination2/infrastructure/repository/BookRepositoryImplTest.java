@@ -152,7 +152,7 @@ class BookRepositoryImplTest {
 
             Book book = new Book("1", "テスト駆動開発", "Uncle Bob", "オーム社", 3080);
 
-            assertThatThrownBy(() -> sut.insertBook(book))
+            assertThatThrownBy(() -> sut.updateBook(book))
                     .isInstanceOf(SqlExecutionException.class)
                     .hasMessage("SQLの実行に失敗しました");
         }

@@ -19,7 +19,8 @@ public class GetBookUseCase {
    * 指定された本IDに対応する本情報を取得します.
    *
    * @param id 本ID
-   * @return 本情報
+   * @return 指定されたIDに対応する本の情報
+   * @throws BookNotFoundException 指定されたIDに対応する本が見つからない場合にスローされる例外
    */
   public Book getBookById(String id) {
     return bookRepository.getBookById(id)
