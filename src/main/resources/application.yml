@@ -1,18 +1,30 @@
+#spring:
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/sample
+#    username: user
+#    password: password
+#    driver-class-name: org.postgresql.Driver
+#    type: com.zaxxer.hikari.HikariDataSource
+#    hikari:
+#      minimum-idle: 2
+#      maximum-pool-size: 5
+#  jackson:
+#    serialization:
+#      indent-output: true
+#  flyway:
+#    enabled: true
+
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/sample
-    username: user
-    password: password
-    driver-class-name: org.postgresql.Driver
-    type: com.zaxxer.hikari.HikariDataSource
-    hikari:
-      minimum-idle: 2
-      maximum-pool-size: 5
+    url: jdbc:postgresql://dpg-cm0on0i1hbls73ddj9kg-a.oregon-postgres.render.com/mydb_sprl
+    username: mashi
+    password: QzXgBOMIYx2TfZJPeDGh2ZsWPSwWu6Li
   jackson:
     serialization:
       indent-output: true
   flyway:
     enabled: true
+    baseline-on-migrate: true
 
 mybatis:
   configuration:
