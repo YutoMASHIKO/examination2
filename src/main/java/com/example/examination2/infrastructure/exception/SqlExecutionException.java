@@ -5,12 +5,12 @@ package com.example.examination2.infrastructure.exception;
  */
 public class SqlExecutionException extends RuntimeException {
 
-    /**
-     * 指定されたメッセージを用いてSqlExecutionExceptionを初期化します.
-     *
-     * @param message エラーメッセージ
-     */
-    public SqlExecutionException(String message) {
-        super(message);
-    }
+  /**
+   * 指定されたメッセージを用いてSqlExecutionExceptionを初期化します.
+   *
+   * @param message エラーメッセージ
+   */
+  public SqlExecutionException(String message) {
+    super(message);
+  }
 }
